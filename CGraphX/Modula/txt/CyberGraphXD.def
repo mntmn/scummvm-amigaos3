@@ -1,0 +1,177 @@
+DEFINITION MODULE CyberGraphXD ;
+
+(*$ IMPLEMENTATION := FALSE *)
+
+(*
+** $VER: CyberGraphXD.def 1.1 (17.12.95)
+**
+** conversion done by Olaf Peters <olf@informatik.uni-bremen.de>
+**
+** NOTE:
+**
+** These interfaces are completely untested, if you should discover bugs,
+** please eMail me!
+**
+** $HISTORY:
+**
+** 17.12.95  1.1   : turned all tagdefinitions into enumerations
+**  4.12.95  1.0   : initial
+**
+*)
+
+FROM SYSTEM   IMPORT  ADDRESS ;
+FROM UtilityD IMPORT  tagUser ;
+
+IMPORT    ed : ExecD,
+          gd : GraphicsD ;
+
+(*                                                          *)
+(*  Definition of CyberModeNode (Returned in AllocModeList) *)
+(*                                                          *)
+
+TYPE
+  CyberModeNodePtr = POINTER TO CyberModeNode ;
+  CyberModeNode = RECORD
+    node           : ed.Node ;
+    modeText       : ARRAY [0..gd.displayNameLen] OF CHAR ;
+    displayID      : LONGCARD ;
+    width,
+    height,
+    depth          : CARDINAL ;
+    displayTagList : ADDRESS ;  (* taglist with extended ModeID information *)
+  END (* RECORD *) ;
+
+(*                                  *)
+(* Parameters for GetCyberMapAttr() *)
+(*                                  *)
+
+TYPE
+  CmaTags = (cmaDummy := tagUser,
+             cmaXMod,               (* function returns BytesPerRow if its called with this parameter *)
+             cmaBPPix,              (* BytesPerPixel shall be returned *)
+             cmaDispAdr,            (* do not use this ! private tag *)
+             cmaPixFmt,             (* the pixel format is returned *)
+             cmaWidth,              (* returns width in pixels *)
+             cmaHeight,             (* returns height in lines *)
+             cmaDepth,              (* returns bits per pixel *)
+             cmaIsCyberGfx,         (* returns -1 if supplied bitmap is a cybergfx one *)
+             cmaIsLinearMem         (* returns -1 if supplied bitmap is linear accessable *)
+  ) ;
+
+(*                                 *)
+(* Parameters for GetCyberIDAttr() *)
+(*                                 *)
+
+TYPE
+  CidaTags = (cidaDummy := tagUser,
+              cidaPixFmt,           (* the pixel format is returned *)
+              cidaWidth,            (* returns visible width in pixels *)
+              cidaHeight,           (* returns visible height in lines *)
+              cidaDepth,            (* returns bits per pixel *)
+              cidaBPPix             (* BytesPerPixel shall be returned *)
+  ) ;
+
+(*                              *)
+(* Tags for CyberModeRequest()  *)
+(*                              *)
+
+(*            *)
+(* FilterTags *)
+(*            *)
+
+TYPE
+  CmrTags = (cmrDummy := tagUser + 40000H - 1,
+
+             cmrMinDepth,    (* Minimum depth for displayed screenmode   *)
+             cmrMaxDepth,    (* Maximum depth  "       "        "        *)
+             cmrMinWidth,    (* Minumum width  "       "        "        *)
+             cmrMaxWidth,    (* Maximum width  "       "        "        *)
+             cmrMinHeight,   (* Minumum height "       "        "        *)
+             cmrMaxHeight,   (* Minumum height "       "        "        *)
+             cmrCModelArray,
+
+             cmrWinTitle,
+             cmrOKText,
+             cmrCancelText,
+
+             cmrScreen       (* Screen you wish the Requester to open on *)
+  ) ;
+
+(*                            *)
+(* Tags for BestCyberModeID() *)
+(*                            *)
+
+(* FilterTags *)
+
+TYPE
+  CbmidTags = (cbmidDummy := tagUser + 50000H - 1,
+
+               cbmidDepth,
+               cbmidNominalWidth,
+               cbmidNominalHeight,
+               cbmidMonitorID
+  ) ;
+
+(*                                    *)
+(* definition of divers pixel formats *)
+(*                                    *)
+
+TYPE
+  PixelFormats = (pixfmtLUT8 := 0,
+                  pixfmtRGB15,
+                  pixfmtBGR15,
+                  pixfmtRGB15PC,
+                  pixfmtBGR15PC,
+                  pixfmtRGB16,
+                  pixfmtBGR16,
+                  pixfmtRGB16PC,
+                  pixfmtBGR16PC,
+                  pixfmtRGB24,
+                  pixfmtBGR24,
+                  pixfmtARGB32,
+                  pixfmtBGRA32,
+                  pixfmtRGBA32
+  ) ;
+
+(*                                                        *)
+(* SrcRectangle formats defines for xxxPixelArray calls() *)
+(*                                                        *)
+
+TYPE
+  RectFormats = (rectfmtRGB := 0,
+                 rectfmtRGBA,
+                 rectfmtARGB,
+                 rectfmtLUT8,
+                 rectfmtGREY8
+  ) ;
+
+(*                                    *)
+(* Parameters for CVideoCtrlTagList() *)
+(*                                    *)
+
+CONST setvcDPMSLevel  = 88002001H ;
+
+TYPE
+  PowerManagement = (On := 0,   (* Full operation                             *)
+                     Standby,   (* Optional state of minimal power reduction  *)
+                     Suspend,   (* Significant reduction of power consumption *)
+                     Off        (* Lowest level of power consumption          *)
+  ) ;
+
+(*                              *)
+(* Tags for LockBitMapTagList() *)
+(*                              *)
+
+TYPE
+  LbmiTags = (lbmiDummy := 84001000H,
+
+              lbmiWidth,
+              lbmiHeight,
+              lbmiDepth,
+              lbmiPixFmt,
+              lbmiBytesPerPix,
+              lbmiBytesPerRow,
+              lbmiBaseAddress
+  ) ;
+
+END CyberGraphXD .

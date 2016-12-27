@@ -1,0 +1,68 @@
+Short:    CyberGraphX Developer Kit Release VI
+Type:     dev/misc
+Author:   Frank Mariak, Matthias Scheler, Joerg Krause, Stefan Becker, Olaf Peters, Mario Kemper, Reinhard Haslbeck, Peter Mysliwy
+Uploader: F.Mariak@ping.de (Frank Mariak)
+
+This is an update to ReleaseV. It also covers cybergraphics version 41 now,
+fixes some bugs in the SAS/C pragmas and adds a bug note to the
+cybergraphics/WriteLUTPixelArray() call.
+Modula and Oberon related information has not been updated yet.
+If anybody is interested to update it, please contact me at F.Mariak@ping.de.
+
+
+This archive contains informations required to develop programs
+which use CyberGraphX:
+
+ Autodocs/cybergraphics.doc	autodoc for the "cybergraphics.library"
+
+ FD/cybergraphics_lib.fd	library function offsets (FD format)
+
+ AmigaE/Modules			module for AmigaE
+
+ AmigaE/Example			Example program in AmigaE
+
+ Assembler/Include		Assembler include file
+
+ C/Include			C includes
+
+ C/dlib				C linker library for DICE
+
+ C/slib				C linker library for SAS/C
+
+ C/Examples			Example programs in C
+
+ Modula				M2Amiga modules
+
+ Oberon/Interfaces		Amiga Oberon module
+
+ Oberon/Examples		Example program for Amiga Oberon
+
+
+The following people created this developer kit:
+
+ Frank Mariak			autodoc, FD, Assembler and C includes
+ F.Mariak@ping.de
+
+ Matthias Scheler		autodoc, C includes, examples, SAS/C support
+ tron@lyssa.owl.de
+
+ Joerg Krause			AmigaE module
+ quacks@paula.owl.de
+
+ Peter Mysliwy			updated AmigaE module, example
+ pamiga@user1.channel1.com
+
+ Stefan Becker			C includes, DICE support
+ stefanb@yello.ping.de
+
+ Olaf Peters			M2Amiga modules
+ olf@informatik.uni-bremen.de
+
+ Mario Kemper			Amiga Oberon module, example
+ magick@bundy.lip.owl.de
+
+ Reinhard Haslbeck		GCC support
+ haslbeck@leo.org
+
+ Roland Mainz
+ gisburn@w-specht.rhein-ruhr.de

@@ -1,0 +1,124 @@
+DEFINITION MODULE CyberGraphXL{"cybergraphics.library",40} ;
+
+(*$ IMPLEMENTATION := FALSE *)
+
+(*
+** $VER: CyberGraphXL.def 1.0 (4.12.95)
+**
+** conversion done by Olaf Peters <olf@informatik.uni-bremen.de>
+**
+** NOTE:
+**
+** These interfaces are completely untested, if you should discover bugs,
+** please eMail me!
+**
+** $HISTORY:
+**
+**  4.12.95  1.0   : initial
+**
+*)
+
+FROM SYSTEM IMPORT BYTE, ADDRESS ;
+
+IMPORT  ed : ExecD,
+        gd : GraphicsD,
+        ud : UtilityD,
+        R ;
+
+(* --- functions in V40 or higher (Release 40.40) --- *)
+
+PROCEDURE IsCyberModeID(displayID{R.D0} : LONGCARD) : BOOLEAN ; CODE -54 ;
+
+PROCEDURE BestCModeID(bestModeIDTags{R.A0} : ud.TagItemPtr) : LONGCARD ; CODE -60 ;
+
+PROCEDURE CModeRequest(modeRequest{R.A0}     : ADDRESS ;
+                       modeRequestTags{R.A1} : ud.TagItemPtr) : LONGCARD ; CODE -66 ;
+
+PROCEDURE AllocCModeList(modeListTags{R.A1} : ud.TagItemPtr) : ed.ListPtr ; CODE -72 ;
+
+PROCEDURE FreeCModeList(modeList{R.A0} : ed.ListPtr) ; CODE -78 ;
+
+PROCEDURE ScalePixelArray(srcRect{R.A0}   : ADDRESS ;
+                          srcW{R.D0},
+                          srcH{R.D1},
+                          srcMod{R.D2}    : CARDINAL ;
+                          rastPort{R.A1}  : gd.RastPortPtr ;
+                          destX{R.D3},
+                          destY{R.D4},
+                          destW{R.D5},
+                          destH{R.D6}     : CARDINAL ;
+                          srcFormat{R.D7} : BYTE) : LONGINT ; CODE -90 ;
+
+PROCEDURE GetCyberMapAttr(cyberGfxBitmap{R.A0} : gd.BitMapPtr ;
+                          cyberAttrTag{R.D0}   : LONGCARD) : LONGCARD ; CODE -96 ;
+
+PROCEDURE GetCyberIDAttr(cyberIDAttr{R.D0},
+                         cyberDisplayModeID{R.D1} : LONGCARD) : LONGCARD ; CODE -102 ;
+
+PROCEDURE ReadRGBPixel(rastPort{R.A0} : gd.RastPortPtr ;
+                       x{R.D0},
+                       y{R.D1}        : CARDINAL) : LONGCARD ; CODE -108 ;
+
+PROCEDURE WriteRGBPixel(rastPort{R.A1} : gd.RastPortPtr ;
+                        x{R.D0},
+                        y{R.D1}        : CARDINAL ;
+                        argb{R.D2}     : LONGCARD) : LONGINT ; CODE -114 ;
+
+PROCEDURE ReadPixelArray(destRect{R.A0}   : ADDRESS ;
+                         destX{R.D0},
+                         destY{R.D1},
+                         destMod{R.D2}    : CARDINAL ;
+                         rastPort{R.A1}   : gd.RastPortPtr ;
+                         srcX{R.D3},
+                         srcY{R.D4},
+                         sizeX{R.D5},
+                         sizeY{R.D6}      : CARDINAL ;
+                         destFormat{R.D7} : BYTE) : LONGCARD ; CODE -120 ;
+
+PROCEDURE WritePixelArray(srcRect{R.A0}   : ADDRESS ;
+                          srcX{R.D0},
+                          srcY{R.D1},
+                          srcMod{R.D2}    : CARDINAL ;
+                          rastPort{R.A1}  : gd.RastPortPtr ;
+                          destX{R.D3},
+                          destY{R.D4},
+                          sizeX{R.D5},
+                          sizeY{R.D6}     : CARDINAL ;
+                          srcFormat{R.D7} : BYTE) : LONGCARD ; CODE -126 ;
+
+PROCEDURE MovePixelArray(srcX{R.D0},
+                         srcY{R.D1}     : CARDINAL ;
+                         rastPort{R.A1} : gd.RastPortPtr ;
+                         destX{R.D2},
+                         destY{R.D3},
+                         sizeX{R.D4},
+                         sizeY{R.D5}    : CARDINAL) : LONGCARD ; CODE -132 ;
+
+PROCEDURE InvertPixelArray(rastPort{R.A1} : gd.RastPortPtr ;
+                           destX{R.D0},
+                           destY{R.D1},
+                           sizeX{R.D2},
+                           sizeY{R.D3}    : CARDINAL) : LONGCARD ; CODE -144 ;
+
+PROCEDURE FillPixelArray(rastPort{R.A1} : gd.RastPortPtr ;
+                         destX{R.D0},
+                         destY{R.D1},
+                         sizeX{R.D2},
+                         sizeY{R.D3}    : CARDINAL ;
+                         argb{R.D4}     : LONGCARD) : LONGCARD ; CODE -150 ;
+
+PROCEDURE DoCDrawMethod(hook{R.A0}     : ud.HookPtr ;
+                        rastPort{R.A1} : gd.RastPortPtr ;
+                        tagList{R.A2}  : ud.TagItemPtr) ; CODE -156 ;
+
+PROCEDURE CVideoCtrl(viewPort{R.A0} : gd.ViewPortPtr ;
+                     tagList{R.A1}  : ud.TagItemPtr) ; CODE -162 ;
+
+(* --- functions in V40 or higher (Release 40.60) --- *)
+
+PROCEDURE LockBitMap(bitMap{R.A0}  : gd.BitMapPtr ;
+                     tagList{R.A1} : ud.TagItemPtr) : ADDRESS ; CODE -168 ;
+
+PROCEDURE UnLockBitMap(handle{R.A0} : ADDRESS) ; CODE -174 ;
+
+END CyberGraphXL .

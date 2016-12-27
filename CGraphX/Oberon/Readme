@@ -1,0 +1,10 @@
+This is an interface module for the cybergraphics.library.
+In the drawer examples you'll find the oberon-version of window.c.
+At this time there exists only a AmigaOberon-Version. If i find the
+time, i'll do a OberonF adaption.
+
+Please report any bugs in CyberGraphics.mod to
+
+magick@bundy.lip.owl.de
+
+

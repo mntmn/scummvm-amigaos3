@@ -1,0 +1,11 @@
+CGXDIR = /
+FLAGS  = -3.1 -mRR -mi -proto -I$(CGXDIR)include
+LIBS   = -L$(CGXDIR)dlib -lcybergraphics
+
+all : ScreenModeReq Window
+
+ScreenModeReq : ScreenModeReq.c
+      dcc $(FLAGS) -o %(left) %(right) $(LIBS)
+
+Window : Window.c
+      dcc $(FLAGS) -o %(left) %(right) $(LIBS)

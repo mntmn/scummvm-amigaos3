@@ -1,0 +1,14 @@
+
+SCOPTS = UNSCHAR NOSTKCHK STRMERGE OPTIMIZE IDIR=SC:Source
+
+.c.o:
+	sc $*.c $(SCOPTS)
+
+
+CGFX_LIB = CGFX_lib.o CGFX_libversion.o
+
+LIB:cgraphx.lib: $(CGFX_LIB)
+	oml $@ r $(CGFX_LIB)
+
+clean:
+	-Delete \#?.o QUIET

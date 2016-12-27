@@ -1,0 +1,25 @@
+
+SCOPTS = UNSCHAR STRMERGE NOSTKCHK PARMS=REGISTER OPTIMIZE
+
+LIBS   = LIB:cgraphx.lib LIB:sc.lib LIB:amiga.lib
+SLO    = SC SD ND
+
+.c.o:
+	sc $*.c $(SCOPTS) OBJNAME=$@
+
+EXAMPLES = Window ScreenModeReq
+
+all: $(EXAMPLES)
+
+clean:
+	-Delete $(EXAMPLES) \#?.(info|o) QUIET
+
+Window: Window.o
+	slink FROM LIB:c.o $*.o $(SLO) LIB $(LIBS) TO $@
+
+Window.o: Window.c
+
+ScreenModeReq: ScreenModeReq.o
+	slink FROM LIB:c.o $*.o $(SLO) LIB $(LIBS) TO $@
+
+ScreenModeReq.o: ScreenModeReq.c

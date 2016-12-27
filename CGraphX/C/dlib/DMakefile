@@ -1,0 +1,65 @@
+#
+# DMakefile for DICE link library "cybergraphics"
+#
+LIBNAME = cybergraphics
+SRCS    = AllocCModeListTags.c BestCModeIDTags.c CModeRequestTags.c \
+          CVideoCtrlTags.c DoCDrawMethodTags.c LockBitMapTags.c
+#
+CGXDIR  = //
+LIBDIR  =
+TMPDIR  = T:dlib/$(LIBNAME)/
+SOBJS   = $(SRCS:"*.c":"$(TMPDIR)*s.o")
+SROBJS  = $(SRCS:"*.c":"$(TMPDIR)*sr.o")
+LOBJS   = $(SRCS:"*.c":"$(TMPDIR)*l.o")
+LROBJS  = $(SRCS:"*.c":"$(TMPDIR)*lr.o")
+SLIB    = $(LIBDIR)$(LIBNAME)s.lib
+SRLIB   = $(LIBDIR)$(LIBNAME)sr.lib
+LLIB    = $(LIBDIR)$(LIBNAME)l.lib
+LRLIB   = $(LIBDIR)$(LIBNAME)lr.lib
+FDLIB   = $(TMPDIR)$(LIBNAME)fd.lib
+FTLOPTS = $(CGXDIR)fd/$(LIBNAME)_lib.fd \
+          -h $(CGXDIR)c/include/clib/$(LIBNAME)_protos.h \
+          -I $(CGXDIR)c/include -I DINCLUDE:amiga31 \
+          -o $(FDLIB) -auto $(LIBNAME).library -v
+CFLAGS  = -3.1 -mi -I $(CGXDIR)c/include
+
+all       : $(SLIB) $(SRLIB) $(LLIB) $(LRLIB)
+
+$(SLIB)   : $(SOBJS)
+      fdtolib $(FTLOPTS) -md
+      Join %(right) $(FDLIB) to %(left)
+      -delete $(FDLIB)
+
+$(SRLIB)  : $(SROBJS)
+      fdtolib $(FTLOPTS) -md -mRR
+      Join %(right) $(FDLIB) to %(left)
+      -delete $(FDLIB)
+
+$(LLIB)   : $(LOBJS)
+      fdtolib $(FTLOPTS) -mD
+      Join %(right) $(FDLIB) to %(left)
+      -delete $(FDLIB)
+
+$(LRLIB)  : $(LROBJS)
+      fdtolib $(FTLOPTS) -mD -mRR
+      Join %(right) $(FDLIB) to %(left)
+      -delete $(FDLIB)
+
+$(SOBJS)  : $(SRCS)
+      dcc $(CFLAGS) -o %(left) -c %(right) -md
+
+$(SROBJS) : $(SRCS)
+      dcc $(CFLAGS) -o %(left) -c %(right) -md -mRR
+
+$(LOBJS)  : $(SRCS)
+      dcc $(CFLAGS) -o %(left) -c %(right) -mD
+
+$(LROBJS) : $(SRCS)
+      dcc $(CFLAGS) -o %(left) -c %(right) -mD -mRR
+
+clean     :
+      -Delete $(TMPDIR) ALL QUIET
+
+new       :
+      DMake clean
+      DMake all
